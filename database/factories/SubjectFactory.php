@@ -22,6 +22,7 @@ class SubjectFactory extends Factory
             'credits'=>$this->faker->numberBetween(1, 5),
             'knowledge_area'=>$this->faker->word,
             'type_of_course'=>$this->faker->randomElement(['electiva', 'obligatoria']),
+            'teacher_id'=>$this->faker->numberBetween(1, 3),
             
         ];
     }
