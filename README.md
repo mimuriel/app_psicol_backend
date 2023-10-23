@@ -20,18 +20,18 @@ Crear un backend API REST en Laravel 9 y un front con VUE JS con un CRUDs que pe
 Instalación:
 
 Se debe clonar el repositorio
-git clone https://github.com/mimuriel/app_psicol_backend.git
+"git clone https://github.com/mimuriel/app_psicol_backend.git"
 
 Se debe tener instalado Laravel y Composer
 
 Correr migraciones 
-php artisan migrate
+"php artisan migrate"
 
 como se crean factories y seeders se puede ejecutar el siguente comando para crear datos
- php artisan migrate:fresh --seed
+"php artisan migrate:fresh --seed"
 
 Luego de tener el proyecto en el equipo local, ejecutar el siguente comando para iniciar el servidor de desarrollo:
-php artisan serve
+"php artisan serve"
 
 
 
