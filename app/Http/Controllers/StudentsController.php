@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Student;
+use App\Models\StudentSubject;
 use Illuminate\Http\Request;
 
 class StudentsController extends Controller
@@ -16,6 +17,12 @@ class StudentsController extends Controller
     {
         $inputs = $request->input();
         $st = Student::create($inputs);
+        foreach ($request->subject_id as $value) {
+            $studentSubject = StudentSubject::create([
+                "student_id" => $st->id,
+                "subject_id" => $value["idUnico"]
+            ]);
+        }
         return response ()->json([
             'data'=>$st,
             'messaje'=>"Estudiante creado con exito ",
