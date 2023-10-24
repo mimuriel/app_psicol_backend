@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 
 class TeachersController extends Controller
 {
+
+    private $notificationsMessage = [];
+    private $result = false;
+
     public function index(){
         return Teacher::all();
     }
@@ -40,30 +44,41 @@ public function store( Request $request)
     }
 
     public function destroy( $id)
-{
-    $tc = Teacher::find($id);
-    if(isset($tc)){
-        $res=Teacher::destroy($id);
-        if($res){
-            return response ()->json([
-                'data'=>$tc,
-                'messaje'=>"Profesor eliminado con exito ",
-            ]);
-        }else{
-            return response ()->json([
-                'data'=>[],
-                'messaje'=>"Profesor no existe ",
-            ]);
+    {
+        try {
+            $tc = Teacher::find($id);
+            if(isset($tc)){
+                $res=Teacher::destroy($id);
+                if($res){
+                    return response ()->json([
+                        'data'=>$tc,
+                        'messaje'=>"Profesor eliminado con exito ",
+                    ]);
+                }else{
+                    return response ()->json([
+                        'data'=>[],
+                        'messaje'=>"Profesor no existe ",
+                    ]);
+                }
+        
+            }
+            else {
+                return response()->json([
+                    'error'=>true,
+                    'messaje'=>"No se logro encontrar el profesor",
+                ]);
+            }
+        } catch (\Exception $ex) {        
+            if ($ex instanceof \Illuminate\Database\QueryException) {
+                $this->notificationsMessage[] = ["warning", "¡El registro tiene transacciones asociadas!"];
+            } else {
+                $this->notificationsMessage[] = ["error", "", "¡Hubo un error, el registro no pudo ser eliminado!", 12000];
+            }
+            return response()->json(["result" => $this->result, "rErrors" => $this->notificationsMessage], 422);
         }
-
+        
     }
-    else{
-        return response()->json([
-            'error'=>true,
-            'messaje'=>"No se logro encontrar el profesor",
-        ]);
-}
-}
+    
 
 public function update( Request $request , $id)
     {
